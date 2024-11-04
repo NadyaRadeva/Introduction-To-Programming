@@ -1,0 +1,67 @@
+#include<iostream>
+
+const size_t MAX_SIZE = 1024;
+
+void swap(int& a, int& b) {
+	int temp = a;
+	a = b;
+	b = temp;
+}
+
+int main() {
+	size_t sizeArr1, sizeArr2;
+	int arr1[MAX_SIZE], arr2[MAX_SIZE];
+
+	std::cout << "Enter the size of your first array: ";
+	std::cin >> sizeArr1;
+	if (!std::cin || sizeArr1 > MAX_SIZE) {
+		std::cerr << "You have entered an incorrect size!" << std::endl;
+		return 1;
+	}
+	std::cout << "Enter the elements in array 1 (sorted): ";
+	for (size_t i = 0; i < sizeArr1; ++i) {
+		std::cin >> arr1[i];
+	}
+
+	std::cout << "Enter the size of your second array: ";
+	std::cin >> sizeArr2;
+	if (!std::cin || sizeArr2 > MAX_SIZE) {
+		std::cerr << "You have entered an incorrect size!" << std::endl;
+		return 1;
+	}
+	std::cout << "Enter the elements in array 2 (sorted): ";
+	for (size_t i = 0; i < sizeArr2; ++i) {
+		std::cin >> arr2[i];
+	}
+
+	if (sizeArr1 + sizeArr2 > MAX_SIZE) {
+		std::cerr << "The sum of the sizes of your two arrays should be lower than 1024!" << std::endl;
+		return 1;
+	}
+
+	int arrSorted[MAX_SIZE];
+	for (size_t i = 0; i < sizeArr1; ++i) {
+		arrSorted[i] = arr1[i];
+	}
+	for (size_t j = 0; j < sizeArr2; ++j) {
+		arrSorted[sizeArr1 + j] = arr2[j];
+	}
+
+	for (size_t i = 0; i < sizeArr1 + sizeArr2 - 1; ++i) {
+		size_t minIndex = i;
+		for (size_t j = i + 1; j < sizeArr1 + sizeArr2; ++j) {
+			if (arrSorted[j] < arrSorted[minIndex]) {
+				minIndex = j;
+			}
+		}
+		swap(arrSorted[i], arrSorted[minIndex]);
+	}
+
+	std::cout << "Your new sorted array: ";
+	for (size_t i = 0; i < sizeArr1 + sizeArr2; ++i) {
+		std::cout << arrSorted[i] << " ";
+	}
+	std::cout << std::endl;
+
+	return 0;
+}
